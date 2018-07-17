@@ -13,7 +13,8 @@ const user = {
     roles: [],
     setting: {
       articlePlatform: []
-    }
+    },
+    id: 0
   },
 
   mutations: {
@@ -40,6 +41,9 @@ const user = {
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles
+    },
+    SET_ID: (state, id) => {
+      state.id = id
     }
   },
 
@@ -50,9 +54,8 @@ const user = {
       return new Promise((resolve, reject) => {
         loginByUsername(username, userInfo.password).then(response => {
           const data = response.data
-          console.log(data)
-          commit('SET_TOKEN', data.token)
-          setToken(response.data.token)
+          commit('SET_TOKEN', data.user_token)
+          setToken(response.data.user_token)
           resolve()
         }).catch(error => {
           reject(error)
@@ -67,6 +70,12 @@ const user = {
           if (!response.data) { // 由于mockjs 不支持自定义状态码只能这样hack
             reject('error')
           }
+
+          if (response.data.error) {
+            reject(response.data.error)
+            logout()
+          }
+
           const data = response.data
 
           if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
@@ -76,8 +85,9 @@ const user = {
           }
 
           commit('SET_NAME', data.name)
-          commit('SET_AVATAR', data.avatar)
-          commit('SET_INTRODUCTION', data.introduction)
+          commit('SET_AVATAR', data.avatar ? data.avatar : 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif')
+          commit('SET_INTRODUCTION', 'I am ' + data.name)
+          commit('SET_ID', data.id)
           resolve(response)
         }).catch(error => {
           reject(error)

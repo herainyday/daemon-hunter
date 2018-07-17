@@ -23,7 +23,11 @@ export default {
     ])
   },
   created() {
-    if (!this.roles.includes('admin')) {
+    if (this.roles.includes('Admin')) {
+      this.currentRole = 'adminDashboard'
+    } else if (this.roles.includes('PoolAdmin')) {
+      this.currentRole = 'adminDashboard'
+    } else {
       this.currentRole = 'editorDashboard'
     }
   }

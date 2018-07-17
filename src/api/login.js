@@ -5,7 +5,6 @@ export function loginByUsername(username, password) {
     'username': username,
     'password': password
   }
-  console.log(data)
   return request({
     url: '/api/v1.0/user/login',
     method: 'post',
@@ -22,9 +21,8 @@ export function logout() {
 
 export function getUserInfo(token) {
   return request({
-    url: '/user/info',
-    method: 'get',
-    params: { token }
+    url: '/api/v1.0/user/info',
+    method: 'post'
   })
 }
 

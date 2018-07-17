@@ -15,7 +15,7 @@ module.exports = {
         target: 'http://10.211.55.3:5000',
         changeOrigin: true,
         pathRewrite: {
-            '^/site': ''
+            '^/site': 'http://10.211.55.3:5000'
         }
       }
     },

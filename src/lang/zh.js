@@ -56,7 +56,15 @@ export default {
     exportZip: 'Export Zip',
     theme: '换肤',
     clipboardDemo: 'Clipboard',
-    i18n: '国际化'
+    i18n: '国际化',
+    overview: '总览',
+    poolview: '矿场详情',
+    rackview: '机架详情',
+    metrics: '指标数据',
+    farmlist: '矿场列表',
+    uploadminer: '上传矿机',
+    initfarm: '新增矿场',
+    pools: '矿场'
   },
   navbar: {
     logOut: '退出登录',
@@ -144,5 +152,39 @@ export default {
     close: '关闭',
     closeOthers: '关闭其它',
     closeAll: '关闭所有'
+  },
+  metrics: {
+    id: 'ID',
+    poolName: '矿场名称',
+    rackName: '机架名称',
+    minerName: '矿工名称',
+    powerLoss: '算力丢失',
+    temperatureAbnormal: '温度异常',
+    lostConnection: '无法连接',
+    runningNormal: '运行正常',
+    operation: '更多操作',
+    doRestart: '重启',
+    showDetails: '详情',
+    success: '成功',
+    fail: '失败',
+    notImplemented: '功能未实现'
+  },
+  pools: {
+    id: 'ID',
+    poolName: '矿场名称',
+    token: 'Token',
+    minerCount: '矿机数量',
+    operation: '更多操作',
+    upload: '上传',
+    showDetails: '详情',
+    init: '新增矿场',
+    success: '成功',
+    fail: '失败',
+    paramMissing: '参数缺失',
+    initSuccess: '新增成功',
+    reset: '重置',
+    deleteMsg: '确认重置吗？',
+    uploadBtn: '上传矿机',
+    uploadFile: '矿机列表'
   }
 }

@@ -56,7 +56,15 @@ export default {
     exportZip: 'Export Zip',
     theme: 'Theme',
     clipboardDemo: 'Clipboard',
-    i18n: 'I18n'
+    i18n: 'I18n',
+    overview: 'Overview',
+    poolview: 'Farm View',
+    rackview: 'Rack View',
+    metrics: 'Metrics',
+    farmlist: 'Farm List',
+    uploadminer: 'Farm Upload',
+    initfarm: 'Farm Init',
+    pools: 'Farm'
   },
   navbar: {
     logOut: 'Log Out',
@@ -144,5 +152,39 @@ export default {
     close: 'Close',
     closeOthers: 'Close Others',
     closeAll: 'Close All'
+  },
+  metrics: {
+    id: 'ID',
+    poolName: 'Farm Name',
+    rackName: 'Rack Name',
+    minerName: 'Miner Name',
+    powerLoss: 'Power Loss',
+    temperatureAbnormal: 'Temperature Abnormal',
+    lostConnection: 'Lost Connection',
+    runningNormal: 'Running Normal',
+    operation: 'Operations',
+    doRestart: 'Restart',
+    showDetails: 'Details',
+    success: 'Success',
+    fail: 'Fail',
+    notImplemented: 'not implemented'
+  },
+  pools: {
+    id: 'ID',
+    poolName: 'Farm Name',
+    token: 'Token',
+    minerCount: 'Miner Count',
+    operation: 'Operations',
+    upload: 'Upload',
+    showDetails: 'Details',
+    init: 'Add New Farm',
+    success: 'Success',
+    fail: 'Fail',
+    paramMissing: 'Params are missing',
+    initSuccess: 'Initial Farm Succeed',
+    reset: 'Reset',
+    deleteMsg: 'Are you sure to reset it?',
+    uploadBtn: 'Upload Miners',
+    uploadFile: 'Miner List'
   }
 }
