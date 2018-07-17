@@ -54,8 +54,8 @@ export default {
         })
 
         this.$router.push({
-          name: 'uploadminer',
-          params: {
+          path: '/pools/uploadminer',
+          query: {
             owner_id: response.data.owner_id,
             pool_id: response.data.pool_id
           }

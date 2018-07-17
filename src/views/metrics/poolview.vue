@@ -1,5 +1,8 @@
 <template>
   <div class="app-container">
+    <!-- <div class="app-container">
+      <el-progress :percentage="percentage"></el-progress>
+    </div> -->
     <el-table :key='tableKey' :data="list" v-loading="listLoading" border fit highlight-current-row
       style="width: 100%;min-height:1000px;">
       <el-table-column width="150px" align="center" :label="$t('metrics.rackName')">
@@ -49,19 +52,40 @@ export default {
     return {
       tableKey: 0,
       list: null,
-      listLoading: true
+      listLoading: true,
+      percentage: 0
     }
   },
   created() {
-    this.getList()
+    var timestamp = this.getTimestamp()
+    this.percentage = Math.round(timestamp % 60 / 60 * 100)
+    this.getList(Math.round(timestamp / 60) * 60)
+    // this.getList(1531374900)
+    console.log(this.$router)
+  },
+  mounted: function() {
+    this.$nextTick(function() {
+      setInterval(this.timer, 1000)
+    })
   },
   methods: {
-    getList() {
-      this.listLoading = true
-      if (this.$route.params.owner_id === undefined || this.$route.params.pool_id === undefined) {
-        this.gotoOverview()
+    getTimestamp() {
+      return Math.round(new Date().getTime() / 1000) - 120
+    },
+    timer() {
+      var current = this.getTimestamp()
+      this.percentage = Math.round(current % 60 / 60 * 100)
+      if (current % 60 === 0) {
+        this.getList(current)
       }
-      fetchPoolview(1531374900, this.$route.params.owner_id, this.$route.params.pool_id).then(response => {
+    },
+    getList(timestamp) {
+      this.listLoading = true
+      if (this.$route.query.owner_id === undefined || this.$route.query.pool_id === undefined) {
+        this.gotoOverview()
+        return
+      }
+      fetchPoolview(timestamp, this.$route.query.owner_id, this.$route.query.pool_id).then(response => {
         this.list = []
         if (response.data.error !== undefined) {
           this.listLoading = false
@@ -90,17 +114,17 @@ export default {
     },
     gotoRackview(row) {
       this.$router.push({
-        name: 'rackview',
-        params: {
-          owner_id: this.$route.params.owner_id,
-          pool_id: this.$route.params.pool_id,
+        path: '/metrics/rackview',
+        query: {
+          owner_id: this.$route.query.owner_id,
+          pool_id: this.$route.query.pool_id,
           rack: row.name
         }
       })
     },
     gotoOverview() {
       this.$router.push({
-        name: 'overview'
+        path: '/metrics/overview'
       })
     }
   }

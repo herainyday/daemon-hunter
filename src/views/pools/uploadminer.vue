@@ -17,7 +17,7 @@
         :on-exceed="handleExceed"
         :file-list="form.fileList">
         <el-button size="small" type="primary">点击上传</el-button>
-        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+        <div slot="tip" class="el-upload__tip">不超过500kb</div>
         </el-upload>
       </el-form-item>
       <el-form-item>
@@ -62,17 +62,11 @@ export default {
   },
   methods: {
     init() {
-      console.log(this.$route)
-      if (this.$route.params.owner_id === undefined || this.$route.params.pool_id === undefined || this.$route.params.pool_name === undefined) {
-        this.$router.push({
-          name: 'farmlist'
-        })
+      if (this.$route.query.owner_id === undefined || this.$route.query.pool_id === undefined || this.$route.query.pool_name === undefined) {
+        this.gotoFarmlist()
         return false
       }
-      this.form.name = this.$route.params.pool_name
-    },
-    doUpload() {
-      console.log(1111)
+      this.form.name = this.$route.query.pool_name
     },
     onSubmit() {
       if (this.form.name === '') {
@@ -85,8 +79,7 @@ export default {
         return false
       }
 
-      uploadMinerInfo(this.$route.params.pool_id, this.$route.params.owner_id, this.payload).then(response => {
-        console.log(response)
+      uploadMinerInfo(this.$route.query.pool_id, this.$route.query.owner_id, this.payload).then(response => {
         if (response.data.error !== undefined) {
           this.$notify({
             title: this.$t('pools.fail'),
@@ -104,16 +97,19 @@ export default {
           duration: 2000
         })
 
-        this.$router.push({
-          name: 'farmlist'
-        })
+        this.gotoFarmlist()
+      })
+    },
+    gotoFarmlist() {
+      this.$router.push({
+        path: '/pools/farmlist'
       })
     },
     handleRemove(file, fileList) {
-      console.log(file, fileList)
+      // do nothing
     },
     handlePreview(file) {
-      console.log(file)
+      // do nothing
     },
     handleExceed(files, fileList) {
       this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)

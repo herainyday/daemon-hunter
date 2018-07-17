@@ -1,5 +1,8 @@
 <template>
   <div class="app-container">
+    <!-- <div class="app-container">
+      <el-progress :percentage="percentage"></el-progress>
+    </div> -->
     <el-table :key='tableKey' :data="list" v-loading="listLoading" border fit highlight-current-row
       style="width: 100%;min-height:1000px;">
       <el-table-column align="center" :label="$t('metrics.id')" width="65">
@@ -35,6 +38,7 @@
       <el-table-column align="center" :label="$t('metrics.operation')" width="230" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" @click="goto(scope.row)" size="mini">{{$t('metrics.showDetails')}}</el-button>
+          <el-button type="primary" @click="goto(scope.row)" size="mini">{{$t('metrics.showDetails')}}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -54,16 +58,35 @@ export default {
     return {
       tableKey: 0,
       list: null,
-      listLoading: true
+      listLoading: true,
+      percentage: 0
     }
   },
   created() {
-    this.getList()
+    var timestamp = this.getTimestamp()
+    this.percentage = Math.round(timestamp % 60 / 60 * 100)
+    this.getList(Math.round(timestamp / 60) * 60)
+    // this.getList(1531374900)
+  },
+  mounted: function() {
+    this.$nextTick(function() {
+      setInterval(this.timer, 1000)
+    })
   },
   methods: {
-    getList() {
+    getTimestamp() {
+      return Math.round(new Date().getTime() / 1000) - 120
+    },
+    timer() {
+      var current = this.getTimestamp()
+      this.percentage = Math.round(current % 60 / 60 * 100)
+      if (current % 60 === 0) {
+        this.getList(current)
+      }
+    },
+    getList(timestamp) {
       this.listLoading = true
-      fetchOverview(1531374900, this.$store.getters.userID).then(response => {
+      fetchOverview(timestamp, this.$store.getters.userID).then(response => {
         this.list = []
         if (response.data.error !== undefined) {
           this.listLoading = false
@@ -94,8 +117,8 @@ export default {
     },
     goto(row) {
       this.$router.push({
-        name: 'poolview',
-        params: {
+        path: '/metrics/poolview',
+        query: {
           owner_id: row.owner_id,
           pool_id: row.id
         }

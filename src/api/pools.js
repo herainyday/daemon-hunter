@@ -31,6 +31,12 @@ export function uploadMinerInfo(pool_id, owner_id, payload) {
   })
 }
 
+// export function resetPool(pool_id, owner_id) {
+//   const data = {
+//     ''
+//   }
+// }
+
 export function uploadMinerFileUrl() {
   return '/site/api/v1.0/pool/uploadFile'
 }

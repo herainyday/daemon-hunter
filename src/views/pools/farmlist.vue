@@ -57,7 +57,6 @@ export default {
     getList() {
       this.listLoading = true
       fetchPools().then(response => {
-        console.log(response)
         this.list = []
         if (response.data.error !== undefined) {
           this.listLoading = false
@@ -85,8 +84,8 @@ export default {
     },
     gotoPoolview(row) {
       this.$router.push({
-        name: 'poolview',
-        params: {
+        path: '/pools/poolview',
+        query: {
           owner_id: row.owner_id,
           pool_id: row.id
         }
@@ -95,8 +94,8 @@ export default {
     gotoUpload(row) {
       console.log(row)
       this.$router.push({
-        name: 'uploadminer',
-        params: {
+        path: '/pools/uploadminer',
+        query: {
           owner_id: row.owner_id,
           pool_id: row.id,
           pool_name: row.name
@@ -105,7 +104,7 @@ export default {
     },
     gotoInit() {
       this.$router.push({
-        name: 'initfarm'
+        path: '/pools/initfarm'
       })
     },
     doReset(row) {
