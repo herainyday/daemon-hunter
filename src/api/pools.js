@@ -31,11 +31,43 @@ export function uploadMinerInfo(pool_id, owner_id, payload) {
   })
 }
 
-// export function resetPool(pool_id, owner_id) {
-//   const data = {
-//     ''
-//   }
-// }
+export function deletePool(pool_id, owner_id) {
+  const data = {
+    'pool_id': pool_id,
+    'owner_id': owner_id
+  }
+  return request({
+    url: '/api/v1.0/pool/deletePool',
+    method: 'post',
+    data
+  })
+}
+
+export function deleteRack(pool_id, rack, owner_id) {
+  const data = {
+    'pool_id': pool_id,
+    'rack': rack,
+    'owner_id': owner_id
+  }
+  return request({
+    url: '/api/v1.0/pool/deleteRack',
+    method: 'post',
+    data
+  })
+}
+
+export function deleteMiner(pool_id, ip, owner_id) {
+  const data = {
+    'pool_id': pool_id,
+    'ip': ip,
+    'owner_id': owner_id
+  }
+  return request({
+    url: '/api/v1.0/pool/deleteMiner',
+    method: 'post',
+    data
+  })
+}
 
 export function uploadMinerFileUrl() {
   return '/site/api/v1.0/pool/uploadFile'

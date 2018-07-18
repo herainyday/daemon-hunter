@@ -20,19 +20,20 @@
           <el-tag :type="scope.row.connection == 0 ? 'success' : 'danger'"> {{scope.row.connection}} / {{scope.row.total}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column width="150px" align="center" :label="$t('metrics.temperatureAbnormal')">
-        <template slot-scope="scope">
-          <el-tag :type="scope.row.temperature == 0 ? 'success' : 'danger'"> {{scope.row.temperature}} / {{scope.row.total}}</el-tag>
-        </template>
-      </el-table-column>
       <el-table-column width="150px" align="center" :label="$t('metrics.powerLoss')">
         <template slot-scope="scope">
           <el-tag :type="scope.row.power == 0 ? 'success' : 'danger'"> {{scope.row.power}} / {{scope.row.total}}</el-tag>
         </template>
       </el-table-column>
+      <el-table-column width="150px" align="center" :label="$t('metrics.temperatureAbnormal')">
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.temperature == 0 ? 'success' : 'danger'"> {{scope.row.temperature}} / {{scope.row.total}}</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column align="center" :label="$t('metrics.operation')" width="230" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" @click="gotoRackview(scope.row)" size="mini">{{$t('metrics.showDetails')}}</el-button>
+          <el-button type="danger" @click="doDelete(scope.row)" size="mini">{{$t('metrics.delete')}}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -41,6 +42,7 @@
 
 <script>
 import { fetchPoolview } from '@/api/metrics'
+import { deleteRack } from '@/api/pools'
 import waves from '@/directive/waves' // 水波纹指令
 
 export default {
@@ -61,7 +63,6 @@ export default {
     this.percentage = Math.round(timestamp % 60 / 60 * 100)
     this.getList(Math.round(timestamp / 60) * 60)
     // this.getList(1531374900)
-    console.log(this.$router)
   },
   mounted: function() {
     this.$nextTick(function() {
@@ -109,6 +110,21 @@ export default {
           })
         })
 
+        this.list.sort(function(a, b) {
+          if (a.connection !== b.connection) {
+            return b.connection - a.connection
+          }
+          if (a.power !== b.power) {
+            return b.power - a.power
+          }
+          if (a.temperature !== b.temperature) {
+            return b.temperature - a.temperature
+          }
+          var a_rack = parseInt(a.name)
+          var b_rack = parseInt(b.name)
+          return a_rack - b_rack
+        })
+
         this.listLoading = false
       })
     },
@@ -125,6 +141,15 @@ export default {
     gotoOverview() {
       this.$router.push({
         path: '/metrics/overview'
+      })
+    },
+    doDelete(row) {
+      this.$confirm(this.$t('pools.deleteMsg')).then(_ => {
+        deleteRack(this.$route.query.pool_id, row.name, this.$route.query.owner_id).then(response => {
+          this.getList(Math.round(this.getTimestamp() / 60) * 60)
+        })
+      }).catch(_ => {
+        // do nothing
       })
     }
   }

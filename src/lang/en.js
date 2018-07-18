@@ -64,7 +64,11 @@ export default {
     farmlist: 'Farm List',
     uploadminer: 'Farm Upload',
     initfarm: 'Farm Init',
-    pools: 'Farm'
+    pools: 'Farm Management',
+    users: 'User Management',
+    adduser: 'Add User',
+    edituser: 'Edit User'
+
   },
   navbar: {
     logOut: 'Log Out',
@@ -164,6 +168,7 @@ export default {
     runningNormal: 'Running Normal',
     operation: 'Operations',
     doRestart: 'Restart',
+    delete: 'Delete',
     showDetails: 'Details',
     success: 'Success',
     fail: 'Fail',
@@ -172,6 +177,7 @@ export default {
   pools: {
     id: 'ID',
     poolName: 'Farm Name',
+    rackName: 'Rack Name',
     token: 'Token',
     minerCount: 'Miner Count',
     operation: 'Operations',
@@ -183,8 +189,20 @@ export default {
     paramMissing: 'Params are missing',
     initSuccess: 'Initial Farm Succeed',
     reset: 'Reset',
-    deleteMsg: 'Are you sure to reset it?',
+    delete: 'Delete',
+    deleteMsg: 'Are you sure to delete it?',
     uploadBtn: 'Upload Miners',
     uploadFile: 'Miner List'
+  },
+  users: {
+    oldPassword: 'Old Password',
+    newPassword: 'New Password',
+    repeatPassword: 'Repeat Password',
+    reset: 'Reset Password',
+    fail: 'Fail',
+    success: 'Success',
+    paramMissing: 'Params are missing',
+    pwdNotChange: 'Passwords are not changed',
+    pwdNotEqual: 'Passwords are not equal'
   }
 }

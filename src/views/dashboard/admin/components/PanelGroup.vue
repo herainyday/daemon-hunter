@@ -1,46 +1,50 @@
 <template>
   <el-row class="panel-group" :gutter="40">
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class='card-panel' @click="handleSetLineChartData('newVisitis')">
+      <div class='card-panel' @click="handleSetLineChartData('normal')">
         <div class="card-panel-icon-wrapper icon-people">
-          <svg-icon icon-class="peoples" class-name="card-panel-icon" />
+          <svg-icon icon-class="tab-miner" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
-          <div class="card-panel-text">New Visits</div>
-          <count-to class="card-panel-num" :startVal="0" :endVal="102400" :duration="2600"></count-to>
+          <div class="card-panel-text">运行正常</div>
+          <div class="card-panel-num">{{panelData.normal}} </div>
+          <!-- <count-to class="card-panel-num" :startVal="0" :endVal="102400" :duration="2600"></count-to> -->
         </div>
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('messages')">
+      <div class="card-panel" @click="handleSetLineChartData('connection')">
         <div class="card-panel-icon-wrapper icon-message">
-          <svg-icon icon-class="message" class-name="card-panel-icon" />
+          <svg-icon icon-class="energy" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
-          <div class="card-panel-text">Messages</div>
-          <count-to class="card-panel-num" :startVal="0" :endVal="81212" :duration="3000"></count-to>
+          <div class="card-panel-text">连接异常</div>
+          <div class="card-panel-num">{{panelData.connection}} </div>
+          <!-- <count-to class="card-panel-num" :startVal="0" :endVal="81212" :duration="3000"></count-to> -->
         </div>
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('purchases')">
+      <div class="card-panel" @click="handleSetLineChartData('power')">
         <div class="card-panel-icon-wrapper icon-money">
-          <svg-icon icon-class="money" class-name="card-panel-icon" />
+          <svg-icon icon-class="flashlight_fill" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
-          <div class="card-panel-text">Purchases</div>
-          <count-to class="card-panel-num" :startVal="0" :endVal="9280" :duration="3200"></count-to>
+          <div class="card-panel-text">算力丢失</div>
+          <div class="card-panel-num">{{panelData.power}} </div>
+          <!-- <count-to class="card-panel-num" :startVal="0" :endVal="9280" :duration="3200"></count-to> -->
         </div>
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('shoppings')">
+      <div class="card-panel" @click="handleSetLineChartData('temperature')">
         <div class="card-panel-icon-wrapper icon-shoppingCard">
-          <svg-icon icon-class="shoppingCard" class-name="card-panel-icon" />
+          <svg-icon icon-class="temperature" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
-          <div class="card-panel-text">Shoppings</div>
-          <count-to class="card-panel-num" :startVal="0" :endVal="13600" :duration="3600"></count-to>
+          <div class="card-panel-text">温度异常</div>
+          <div class="card-panel-num">{{panelData.temperature}} </div>
+          <!-- <count-to class="card-panel-num" :startVal="0" :endVal="13600" :duration="3600"></count-to> -->
         </div>
       </div>
     </el-col>
@@ -51,6 +55,19 @@
 import CountTo from 'vue-count-to'
 
 export default {
+  props: {
+    panelData: {
+      type: Object,
+      default: function() {
+        return {
+          normal: 1000,
+          connection: 2000,
+          power: 0,
+          temperature: 0
+        }
+      }
+    }
+  },
   components: {
     CountTo
   },

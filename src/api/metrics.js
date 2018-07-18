@@ -7,6 +7,13 @@ export function fetchOverview(now, user_id) {
   })
 }
 
+export function fetchPeriod(now, user_id) {
+  return request({
+    url: '/api/v1.0/view/period/' + now + '/' + user_id,
+    method: 'get'
+  })
+}
+
 export function fetchPoolview(now, user_id, pool_id) {
   return request({
     url: '/api/v1.0/view/pool/' + now + '/' + user_id + '/' + pool_id,

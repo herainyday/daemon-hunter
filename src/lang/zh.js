@@ -64,7 +64,10 @@ export default {
     farmlist: '矿场列表',
     uploadminer: '上传矿机',
     initfarm: '新增矿场',
-    pools: '矿场'
+    pools: '矿场管理',
+    users: '用户管理',
+    adduser: '添加用户',
+    edituser: '编辑用户'
   },
   navbar: {
     logOut: '退出登录',
@@ -160,10 +163,11 @@ export default {
     minerName: '矿工名称',
     powerLoss: '算力丢失',
     temperatureAbnormal: '温度异常',
-    lostConnection: '无法连接',
+    lostConnection: '连接异常',
     runningNormal: '运行正常',
     operation: '更多操作',
     doRestart: '重启',
+    delete: '删除',
     showDetails: '详情',
     success: '成功',
     fail: '失败',
@@ -172,6 +176,7 @@ export default {
   pools: {
     id: 'ID',
     poolName: '矿场名称',
+    rackName: '机架名称',
     token: 'Token',
     minerCount: '矿机数量',
     operation: '更多操作',
@@ -183,8 +188,20 @@ export default {
     paramMissing: '参数缺失',
     initSuccess: '新增成功',
     reset: '重置',
-    deleteMsg: '确认重置吗？',
+    delete: '删除',
+    deleteMsg: '确认删除吗？',
     uploadBtn: '上传矿机',
     uploadFile: '矿机列表'
+  },
+  users: {
+    oldPassword: '旧密码',
+    newPassword: '新密码',
+    repeatPassword: '重复密码',
+    reset: '重置密码',
+    fail: '失败',
+    success: '成功',
+    paramMissing: '参数缺失',
+    pwdNotChange: '密码未修改',
+    pwdNotEqual: '密码不一致'
   }
 }

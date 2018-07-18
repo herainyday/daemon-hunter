@@ -22,16 +22,9 @@
       </el-form-item>
       <el-form-item>
         <el-table :data="ipList" height="250">
-            <el-table-column
-            prop="id"
-            label="ID"
-            width="180">
-            </el-table-column>
-            <el-table-column
-            prop="ip"
-            label="IP"
-            width="180">
-            </el-table-column>
+            <el-table-column prop="id" label="ID" width="180"></el-table-column>
+            <el-table-column prop="rack" :label="$t('pools.rackName')" width="180"></el-table-column>
+            <el-table-column prop="ip" label="IP" width="180"></el-table-column>
         </el-table>
       </el-form-item>
       <el-form-item>
@@ -132,7 +125,8 @@ export default {
       response.payload.forEach(e => {
         this.ipList.push({
           id: i,
-          ip: e.ip
+          ip: e.ip,
+          rack: e.rack
         })
         i++
       })

@@ -74,6 +74,7 @@ export const constantRouterMap = [
       icon: 'table',
       noCache: true
     },
+    alwaysShow: true,
     children: [
       {
         path: 'overview',
@@ -85,13 +86,15 @@ export const constantRouterMap = [
         path: 'poolview',
         component: () => import('@/views/metrics/poolview'),
         name: 'poolview',
-        meta: { title: 'poolview' }
+        meta: { title: 'poolview' },
+        hidden: true
       },
       {
         path: 'rackview',
         component: () => import('@/views/metrics/rackview'),
         name: 'rackview',
-        meta: { title: 'rackview' }
+        meta: { title: 'rackview' },
+        hidden: true
       }
     ]
   },
@@ -105,10 +108,27 @@ export const constantRouterMap = [
       icon: 'tab',
       noCache: true
     },
+    alwaysShow: true,
     children: [
-      { path: 'farmlist', component: () => import('@/views/pools/farmlist'), name: 'farmlist', meta: { title: 'farmlist' }},
-      { path: 'initfarm', component: () => import('@/views/pools/initfarm'), name: 'initfarm', meta: { title: 'initfarm' }},
-      { path: 'uploadminer', component: () => import('@/views/pools/uploadminer'), name: 'uploadminer', meta: { title: 'uploadminer' }}
+      { path: 'farmlist', component: () => import('@/views/pools/farmlist'), name: 'farmlist', meta: { title: 'farmlist', roles: ['Admin', 'PoolAdmin'] }},
+      { path: 'initfarm', component: () => import('@/views/pools/initfarm'), name: 'initfarm', meta: { title: 'initfarm', roles: ['Admin', 'PoolAdmin'] }},
+      { path: 'uploadminer', component: () => import('@/views/pools/uploadminer'), name: 'uploadminer', meta: { title: 'uploadminer' }, hidden: true }
+    ]
+  },
+  {
+    path: '/users',
+    component: Layout,
+    redirct: '/users/edituser',
+    name: 'users',
+    meta: {
+      title: 'users',
+      icon: 'peoples',
+      noCache: true
+    },
+    alwaysShow: true,
+    children: [
+      { path: 'adduser', component: () => import('@/views/users/adduser'), name: 'adduser', meta: { title: 'adduser', roles: ['Admin'] }, hidden: true },
+      { path: 'edituser', component: () => import('@/views/users/edituser'), name: 'edituser', meta: { title: 'edituser' }}
     ]
   }
 ]

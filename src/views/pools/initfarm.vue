@@ -35,7 +35,6 @@ export default {
       }
 
       initPool(this.form.name).then(response => {
-        console.log(response)
         if (response.data.error !== undefined) {
           this.$notify({
             title: this.$t('pools.fail'),

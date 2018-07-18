@@ -25,7 +25,7 @@
       <el-table-column align="center" :label="$t('pools.operation')" width="230" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="success" @click="gotoUpload(scope.row)" size="mini">{{$t('pools.upload')}}</el-button>
-          <el-button type="danger" @click="doReset(scope.row)" size="mini">{{$t('pools.reset')}}</el-button>
+          <el-button type="danger" @click="doDelete(scope.row)" size="mini">{{$t('pools.delete')}}</el-button>
           <el-button type="primary" @click="gotoPoolview(scope.row)" size="mini">{{$t('pools.showDetails')}}</el-button>
         </template>
       </el-table-column>
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { fetchPools } from '@/api/pools'
+import { fetchPools, deletePool } from '@/api/pools'
 import waves from '@/directive/waves' // 水波纹指令
 
 export default {
@@ -84,7 +84,7 @@ export default {
     },
     gotoPoolview(row) {
       this.$router.push({
-        path: '/pools/poolview',
+        path: '/metrics/poolview',
         query: {
           owner_id: row.owner_id,
           pool_id: row.id
@@ -92,7 +92,6 @@ export default {
       })
     },
     gotoUpload(row) {
-      console.log(row)
       this.$router.push({
         path: '/pools/uploadminer',
         query: {
@@ -107,9 +106,11 @@ export default {
         path: '/pools/initfarm'
       })
     },
-    doReset(row) {
+    doDelete(row) {
       this.$confirm(this.$t('pools.deleteMsg')).then(_ => {
-        // delete it
+        deletePool(row.id, row.owner_id).then(response => {
+          this.getList()
+        })
       }).catch(_ => {
         // do nothing
       })

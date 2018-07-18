@@ -72,10 +72,10 @@ export default {
     }
   },
   methods: {
-    setOptions({ expectedData, actualData } = {}) {
+    setOptions({ expectedData, actualData, timestamps } = {}) {
       this.chart.setOption({
         xAxis: {
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          data: timestamps || ['6 min ago', '5 min ago', '4 min ago', '3 min ago', '2 min ago', '1 min ago', 'now'],
           boundaryGap: false,
           axisTick: {
             show: false

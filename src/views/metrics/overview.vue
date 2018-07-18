@@ -25,20 +25,20 @@
           <el-tag :type="scope.row.connection == 0 ? 'success' : 'danger'"> {{scope.row.connection}} / {{scope.row.total}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column width="150px" align="center" :label="$t('metrics.temperatureAbnormal')">
-        <template slot-scope="scope">
-          <el-tag :type="scope.row.temperature == 0 ? 'success' : 'danger'"> {{scope.row.temperature}} / {{scope.row.total}}</el-tag>
-        </template>
-      </el-table-column>
       <el-table-column width="150px" align="center" :label="$t('metrics.powerLoss')">
         <template slot-scope="scope">
           <el-tag :type="scope.row.power == 0 ? 'success' : 'danger'"> {{scope.row.power}} / {{scope.row.total}}</el-tag>
         </template>
       </el-table-column>
+      <el-table-column width="150px" align="center" :label="$t('metrics.temperatureAbnormal')">
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.temperature == 0 ? 'success' : 'danger'"> {{scope.row.temperature}} / {{scope.row.total}}</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column align="center" :label="$t('metrics.operation')" width="230" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" @click="goto(scope.row)" size="mini">{{$t('metrics.showDetails')}}</el-button>
-          <el-button type="primary" @click="goto(scope.row)" size="mini">{{$t('metrics.showDetails')}}</el-button>
+          <el-button type="danger" @click="doDelete(scope.row)" size="mini">{{$t('metrics.delete')}}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -47,6 +47,7 @@
 
 <script>
 import { fetchOverview } from '@/api/metrics'
+import { deletePool } from '@/api/pools'
 import waves from '@/directive/waves' // 水波纹指令
 
 export default {
@@ -112,6 +113,19 @@ export default {
           })
         })
 
+        this.list.sort(function(a, b) {
+          if (a.connection !== b.connection) {
+            return b.connection - a.connection
+          }
+          if (a.power !== b.power) {
+            return b.power - a.power
+          }
+          if (a.temperature !== b.temperature) {
+            return b.temperature - a.temperature
+          }
+          return a.id - b.id
+        })
+
         this.listLoading = false
       })
     },
@@ -122,6 +136,23 @@ export default {
           owner_id: row.owner_id,
           pool_id: row.id
         }
+      })
+    },
+    gotoRackWrongView(row) {
+      this.$notify({
+        title: this.$t('metrics.fail'),
+        message: this.$t('metrics.notImplemented'),
+        type: 'error',
+        duration: 2000
+      })
+    },
+    doDelete(row) {
+      this.$confirm(this.$t('pools.deleteMsg')).then(_ => {
+        deletePool(row.id, row.owner_id).then(response => {
+          this.getList(Math.round(this.getTimestamp() / 60) * 60)
+        })
+      }).catch(_ => {
+        // do nothing
       })
     }
   }

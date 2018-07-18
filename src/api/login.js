@@ -26,3 +26,28 @@ export function getUserInfo(token) {
   })
 }
 
+export function resetPassword(oldPassword, newPassword) {
+  const data = {
+    'old': oldPassword,
+    'new': newPassword
+  }
+  return request({
+    url: '/api/v1.0/user/resetPassword',
+    method: 'post',
+    data
+  })
+}
+
+export function register(username, password, email, phone) {
+  const data = {
+    'username': username,
+    'password': password,
+    'email': email,
+    'phone': phone
+  }
+  return request({
+    url: '/api/v1.0/user/register',
+    method: 'post',
+    data
+  })
+}
